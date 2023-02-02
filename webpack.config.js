@@ -15,7 +15,7 @@ module.exports = {
     isDevelopment && 'webpack-hot-middleware/client?timeout=1000'
   ].filter(Boolean),
   resolve: {
-    extensions: ['.js', '.jsx', '.tsx']
+    extensions: ['.js', '.jsx', '.tsx', '.ts']
   },
   output: {
     path: serverPublicPath
