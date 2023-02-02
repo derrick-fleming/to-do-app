@@ -19,7 +19,20 @@ const jsonMiddleWare = express.json();
 
 app.use(jsonMiddleWare);
 
-app.get('/api/hello', (req, res) => {
+app.get('/api/todos', async (req, res) => {
+  try {
+    const sql = `
+    select *
+    from "todos"`;
+    const dbResponse = await db.query(sql);
+    const todos = dbResponse.rows;
+    res.status(200).json(todos);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: 'an unexpected error occurred'
+    });
+  }
   res.json({ hello: 'world' });
 });
 
