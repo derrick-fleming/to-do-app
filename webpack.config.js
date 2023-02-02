@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const clientPath = path.join(__dirname, 'client');
+const clientPath = './client/index.tsx';
 const serverPublicPath = path.join(__dirname, 'server', 'public');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -15,7 +15,7 @@ module.exports = {
     isDevelopment && 'webpack-hot-middleware/client?timeout=1000'
   ].filter(Boolean),
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.tsx', '.ts']
   },
   output: {
     path: serverPublicPath
@@ -44,6 +44,11 @@ module.exports = {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       }
     ]
   },
