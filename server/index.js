@@ -15,14 +15,18 @@ const app = express();
 
 app.use(staticMiddleware);
 
+const jsonMiddleWare = express.json();
+
+app.use(jsonMiddleWare);
+
 app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });
 
 app.post('/api/todos', async (req, res) => {
   try {
-    const { task, isCompleted = false } = req.body;
-    if (!task || typeof isCompleted !== 'boolean') {
+    const { todoItem, isCompleted = false } = req.body;
+    if (!todoItem || typeof isCompleted !== 'boolean') {
       res.status(400).json({
         error: 'task (string) and isCompleted (boolean) are required fields'
       });
@@ -33,7 +37,7 @@ app.post('/api/todos', async (req, res) => {
     values ($1, $2)
     returning *`;
 
-    const params = [task, isCompleted];
+    const params = [todoItem, isCompleted];
     const dbresult = await db.query(sql, params);
     const [todo] = dbresult.rows;
     res.status(201).json(todo);
