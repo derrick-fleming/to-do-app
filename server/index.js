@@ -33,7 +33,6 @@ app.get('/api/todos', async (req, res) => {
       error: 'an unexpected error occurred'
     });
   }
-  res.json({ hello: 'world' });
 });
 
 app.post('/api/todos', async (req, res) => {
