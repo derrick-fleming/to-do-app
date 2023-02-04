@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import store from "../redux/generate-store";
 
 type Todos = {
   task: string,
@@ -11,7 +12,23 @@ type Todos = {
 
 export default function TodoList() {
   const todos = useSelector((state: { todosList: {todos: Todos[]}}) => state.todosList.todos);
-  console.log(todos);
+  const dispatch = useDispatch();
+
+  useEffect (() => {
+    const fetchData = async() => {
+      try {
+        const data = await fetch('/api/todos');
+        const todos = await data.json();
+        dispatch({type: 'getLists', todos});
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    fetchData();
+    store.subscribe(store.getState);
+  }, []);
+
   const list = todos.map(todo => {
     return (
       <li key={todo.id}>
@@ -19,7 +36,6 @@ export default function TodoList() {
       </li>
     )
   })
-
   return (
     <Row>
       <Col>
