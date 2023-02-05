@@ -2,40 +2,32 @@ import React, { useEffect } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch, useSelector } from "react-redux";
-import store from "../redux/generate-store";
+import { getTodosAsync } from '../redux/todos-slice';
 
 type Todos = {
   task: string,
   isCompleted: boolean,
-  id: string
+  todoId: string
 };
 
 export default function TodoList() {
-  const todos = useSelector((state: { todosList: {todos: Todos[]}}) => state.todosList.todos);
+  const todos = useSelector( (state:{ todosList: Todos[]}) => state.todosList);
+  console.log(useSelector (state => state));
   const dispatch = useDispatch();
 
   useEffect (() => {
-    const fetchData = async() => {
-      try {
-        const data = await fetch('/api/todos');
-        const todos = await data.json();
-        dispatch({type: 'getLists', todos});
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    // @ts-ignore
+    dispatch(getTodosAsync());
+  }, [dispatch]);
+  const list = todos.length === 0 ? 'Loading...' :
+    todos.map(todo => {
+      return (
+        <li key={todo.todoId}>
+          <h1>{todo.task}</h1>
+        </li>
+      )
+    });
 
-    fetchData();
-    store.subscribe(store.getState);
-  }, []);
-
-  const list = todos.map(todo => {
-    return (
-      <li key={todo.id}>
-        <h1>{todo.task}</h1>
-      </li>
-    )
-  })
   return (
     <Row>
       <Col>
