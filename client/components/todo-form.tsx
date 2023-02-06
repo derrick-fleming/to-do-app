@@ -36,10 +36,10 @@ export default function TodoForm() {
     <Row className="justify-content-center">
       <Col md={8} xs={11}>
         <Form onSubmit={addTodo}>
-          <Form.Label htmlFor="todo" className="fs-5">Write your Task</Form.Label>
+          <Form.Label htmlFor="todo" className="fs-4">Write your Task</Form.Label>
           <Form.Control id="todo" type="text" placeholder="Enter task" className="my-2" onChange={writeItem}></Form.Control>
           <div className="text-end">
-            <Button type="submit" className="fs-5">Submit</Button>
+            <Button type="submit" className="fs-4">Submit</Button>
           </div>
         </Form>
       </Col>

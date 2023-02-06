@@ -1,0 +1,9 @@
+ul {
+  list-style: none;
+}
+
+.is-completed > .form-check-label {
+  text-decoration: line-through;
+  font-style: italic;
+  color: #9c9c9c;
+}
