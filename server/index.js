@@ -23,7 +23,8 @@ app.get('/api/todos', async (req, res) => {
   try {
     const sql = `
     select *
-    from "todos"`;
+    from "todos"
+    order by "todoId"`;
     const dbResponse = await db.query(sql);
     const todos = dbResponse.rows;
     res.status(200).json(todos);
@@ -61,7 +62,7 @@ app.post('/api/todos', async (req, res) => {
   }
 });
 
-app.patch('api/todos', async (req, res) => {
+app.patch('/api/todos', async (req, res) => {
   try {
     const { isCompleted, todoId } = req.body;
     const sql = `

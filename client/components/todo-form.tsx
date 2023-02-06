@@ -18,7 +18,6 @@ export default function TodoForm() {
       if (todo) {
         // @ts-ignore
         dispatch(getTodosAsync());
-        console.log('todos dispatched');
         setTodoItem('');
       }
     } catch (error) {

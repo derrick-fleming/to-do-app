@@ -4,7 +4,6 @@ export const getTodosAsync = createAsyncThunk('todos/getTodos', async () => {
   const response = await fetch('/api/todos');
   if (response.ok) {
     const todos = await response.json();
-    console.log('todosThunk', todos);
     return { todos };
   }
 })
