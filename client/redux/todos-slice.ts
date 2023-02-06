@@ -13,7 +13,7 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState: [],
   reducers: {
-    add: (state, action) => {
+    addTodo: (state, action) => {
       [...state, action.payload];
     },
     getList: (state, action) => {
@@ -27,6 +27,6 @@ export const todosSlice = createSlice({
   }
 })
 
-export const { add } = todosSlice.actions;
+export const { addTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;

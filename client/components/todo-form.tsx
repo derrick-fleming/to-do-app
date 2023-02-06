@@ -1,6 +1,7 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react';
 import { Row, Col, Form, Button  } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { getTodosAsync } from '../redux/todos-slice';
 
 export default function TodoForm() {
   const [todoItem, setTodoItem] = useState('');
@@ -8,10 +9,23 @@ export default function TodoForm() {
 
   const writeItem = (e: ChangeEvent<HTMLInputElement>) => setTodoItem(e.target.value);
 
-  const addTodo = async (e: FormEvent) => {
-    try {
-      console.log('submitted');
-      e.preventDefault();
+  function handleSubmit (e: SyntheticEvent){
+    e.preventDefault();
+    const patchTodo = async (body: {}) => {
+      try {
+      const response = await fetch('/api/todos', body);
+      const todo = await response.json();
+      if (todo) {
+        // @ts-ignore
+        dispatch(getTodosAsync());
+        console.log('todos dispatched');
+        setTodoItem('');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    }
+
       if (todoItem.length === 0) {
         return;
       }
@@ -23,21 +37,15 @@ export default function TodoForm() {
         },
         body: JSON.stringify(newTodo)
       };
-      const response = await fetch('/api/todos', body);
-      const todo = await response.json();
-      dispatch({type: 'todos/add', payload: todo});
-      setTodoItem('');
-  } catch(error) {
-    console.error(error);
-  }
+      patchTodo(body);
 }
 
   return (
     <Row className="justify-content-center">
       <Col md={8} xs={11}>
-        <Form onSubmit={addTodo}>
+        <Form onSubmit={handleSubmit}>
           <Form.Label htmlFor="todo" className="fs-4">Write your Task</Form.Label>
-          <Form.Control id="todo" type="text" placeholder="Enter task" className="my-2" onChange={writeItem}></Form.Control>
+          <Form.Control id="todo" type="text" placeholder="Enter task" className="my-2" value={todoItem} onChange={writeItem}></Form.Control>
           <div className="text-end">
             <Button type="submit" className="fs-4">Submit</Button>
           </div>
