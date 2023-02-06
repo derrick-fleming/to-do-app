@@ -61,6 +61,33 @@ app.post('/api/todos', async (req, res) => {
   }
 });
 
+app.patch('api/todos', async (req, res) => {
+  try {
+    const { isCompleted, todoId } = req.body;
+    const sql = `
+      update "todos"
+        set "isCompleted" = $2
+      where "todoId" = $1
+      returning *
+    `;
+    const params = [todoId, isCompleted];
+    const dbResult = await db.query(sql, params);
+    const [todo] = await dbResult.rows;
+    if (!todo) {
+      res.status(404).json({
+        error: `cannot find todo with todoId ${todoId}`
+      });
+      return;
+    }
+    res.json(todo);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: 'an unexpected error occurred'
+    });
+  }
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
