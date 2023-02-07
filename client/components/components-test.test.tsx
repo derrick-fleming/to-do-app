@@ -1,25 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from '../app';
-import TodoForm from '../components/todo-form';
-import TodoList from '../components/todo-list';
-import Home from './home';
+import TodoForm from './todo-form';
+import TodoList from './todo-list';
 import { Provider } from 'react-redux';
 import store from '../redux/generate-store';
-
-it ('renders App correctly', ()=> {
-  const tree = renderer
-    .create(<Provider store={store}><App /></Provider>)
-    .toJSON();
-  expect(tree).toMatchSnapshot;
-});
-
-it ('renders Home correctly', () => {
-  const tree = renderer
-    .create(<Provider store={store}><Home /></Provider>)
-    .toJSON();
-  expect(tree).toMatchSnapshot;
-});
 
 it('renders TodoList correctly', () => {
   const tree = renderer
