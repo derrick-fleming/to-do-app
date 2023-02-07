@@ -4,7 +4,6 @@ export const getTodosAsync = createAsyncThunk('todos/getTodos', async () => {
   const response = await fetch('/api/todos');
   if (response.ok) {
     const todos = await response.json();
-    console.log('todosThunk', todos);
     return { todos };
   }
 })
@@ -13,7 +12,7 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState: [],
   reducers: {
-    add: (state, action) => {
+    addTodo: (state, action) => {
       [...state, action.payload];
     },
     getList: (state, action) => {
@@ -27,6 +26,6 @@ export const todosSlice = createSlice({
   }
 })
 
-export const { add } = todosSlice.actions;
+export const { addTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;
