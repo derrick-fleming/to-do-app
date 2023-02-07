@@ -34,7 +34,6 @@ function TodoItem(props: { todo: { todoId: string, task: string, isCompleted: bo
         body: JSON.stringify(statusObject)
         }
       const response = await fetch ('api/todos', body);
-      console.log({response});
       const update = await response.json();
       if (update) {
         // @ts-ignore
