@@ -8,5 +8,5 @@ it('renders App correctly', () => {
   const tree = renderer
     .create(<Provider store={store}><App /></Provider>)
     .toJSON();
-  expect(tree).toMatchSnapshot;
+  expect(tree).toMatchSnapshot();
 });

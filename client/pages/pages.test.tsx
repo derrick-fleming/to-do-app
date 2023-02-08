@@ -8,5 +8,5 @@ it('renders Home correctly', () => {
   const tree = renderer
     .create(<Provider store={store}><Home /></Provider>)
     .toJSON();
-  expect(tree).toMatchSnapshot;
+  expect(tree).toMatchSnapshot();
 });
