@@ -80,7 +80,7 @@ app.patch('/api/todos', async (req, res) => {
       });
       return;
     }
-    res.json(todo);
+    res.status(200).json(todo);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -94,3 +94,5 @@ app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
 });
+
+module.exports = app;
