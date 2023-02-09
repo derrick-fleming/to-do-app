@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders App correctly 1`] = `
+<div
+  className="container"
+>
+  <h1
+    className="text-center mt-4"
+  >
+    My Todo List
+  </h1>
+  <div
+    className="justify-content-center row"
+  >
+    <div
+      className="col-md-8 col-11"
+    >
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <label
+          className="fs-4 form-label"
+          htmlFor="todo"
+        >
+          Write your Task
+        </label>
+        <input
+          className="my-2 form-control"
+          id="todo"
+          onChange={[Function]}
+          placeholder="Enter task"
+          type="text"
+          value=""
+        />
+        <div
+          className="text-end"
+        >
+          <button
+            className="fs-4 btn btn-primary"
+            disabled={false}
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div
+    className="justify-content-center row"
+  >
+    <div
+      className="col-md-8 col-11"
+    >
+      <ul>
+        Loading...
+      </ul>
+    </div>
+  </div>
+</div>
+`;

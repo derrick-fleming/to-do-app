@@ -13,7 +13,7 @@ type Todos = {
 
 
 
-function TodoItem(props: { todo: { todoId: string, task: string, isCompleted: boolean } }) {
+export function TodoItem(props: { todo: { todoId: string, task: string, isCompleted: boolean } }) {
   const { todoId, task, isCompleted } = props.todo;
   const dispatch = useDispatch();
 
