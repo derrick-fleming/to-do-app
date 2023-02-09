@@ -7,3 +7,17 @@ ul {
   font-style: italic;
   color: #9c9c9c;
 }
+
+.width-80 {
+  width: 90%;
+}
+
+button {
+  background: none;
+  color: #6e6e6e;
+  transition: color 0.3s ease;
+}
+
+button:hover {
+  color: #000;
+}
