@@ -3,6 +3,7 @@ const request = require('supertest');
 const app = require('./index');
 
 describe('Test the root path', () => {
+
   let todoId;
   test('It should respond with the GET method', async () => {
     try {
@@ -55,4 +56,16 @@ describe('Test the root path', () => {
       console.error(err);
     }
   });
+
+  test('It should send an error message with an invalid todoId', async () => {
+    try {
+      const body = { todoId: 10000 };
+      const response = await request(app).delete('/api/todos').send(body);
+      expect(response.statusCode).toBe(404);
+      expect(response._body.error).toBe('cannot find todo with todoId 10000');
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
 });

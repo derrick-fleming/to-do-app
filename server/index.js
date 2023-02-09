@@ -116,8 +116,4 @@ app.delete('/api/todos', async (req, res) => {
 
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
-  process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
-});
-
 module.exports = app;
