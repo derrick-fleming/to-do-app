@@ -2,17 +2,14 @@ import React, { useEffect } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useDispatch, useSelector } from "react-redux";
-import { getTodosAsync } from '../redux/todos-slice';
+import { getTodosAsync, toggleComplete, deleteTodo } from '../redux/todos-slice';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 
 type Todos = {
   task: string,
   isCompleted: boolean,
   todoId: string
 };
-
-
 
 export function TodoItem(props: { todo: { todoId: string, task: string, isCompleted: boolean } }) {
   const { todoId, task, isCompleted } = props.todo;
@@ -36,16 +33,17 @@ export function TodoItem(props: { todo: { todoId: string, task: string, isComple
         }
       const response = await fetch ('api/todos', body);
       const update = await response.json();
+      console.log({update});
       if (update) {
         // @ts-ignore
-        dispatch(getTodosAsync());
+        dispatch(toggleComplete(update));
       }
     } catch (err) {
       console.error('There was an error!', err);
     }
   }
 
-  const handleClick = async (todoId: string) => {
+  const handleDelete = async (todoId: string) => {
     try {
       const body = {
         method: 'DELETE',
@@ -56,7 +54,7 @@ export function TodoItem(props: { todo: { todoId: string, task: string, isComple
       const deleteStatus = await response.json();
       if (deleteStatus) {
         // @ts-ignore
-        dispatch(getTodosAsync());
+        dispatch(deleteTodo(todoId));
       }
     } catch (err) {
       console.error('There was an error!', err);
@@ -68,7 +66,7 @@ export function TodoItem(props: { todo: { todoId: string, task: string, isComple
     <li>
       <div>
         <Form.Check type="checkbox" id={idAttr} label={task} className={`${taskClass} width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
-        <button className="d-inline border-0 background-none" onClick={() => handleClick(todoId)}><i className="fa-solid fa-trash"></i></button>
+        <button className="d-inline border-0 background-none" onClick={() => handleDelete(todoId)}><i className="fa-solid fa-trash"></i></button>
       </div>
     </li>
   )

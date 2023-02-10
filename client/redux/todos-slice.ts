@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 export const getTodosAsync = createAsyncThunk('todos/getTodos', async () => {
   const response = await fetch('/api/todos');
@@ -8,15 +9,27 @@ export const getTodosAsync = createAsyncThunk('todos/getTodos', async () => {
   }
 })
 
+interface Item {
+  todoId: number
+  task: string
+  isCompleted: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export const todosSlice = createSlice({
   name: 'todos',
-  initialState: [],
+  initialState: [] as Item[],
   reducers: {
-    addTodo: (state, action) => {
-      [...state, action.payload];
+    addTodo: (state, action: PayloadAction<Item>) => {
+      state.push(action.payload);
     },
-    getList: (state, action) => {
-      [action.payload]
+    toggleComplete: (state, action: PayloadAction<Item>) => {
+      const index = state.findIndex(todo => todo.todoId === action.payload.todoId)
+      state[index].isCompleted = action.payload.isCompleted;
+    },
+    deleteTodo: (state, action: PayloadAction<number>) => {
+      return state.filter(todo => todo.todoId !== action.payload);
     }
   },
   extraReducers: (builder) => {
@@ -26,6 +39,6 @@ export const todosSlice = createSlice({
   }
 })
 
-export const { addTodo } = todosSlice.actions;
+export const { addTodo, toggleComplete, deleteTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;

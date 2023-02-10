@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react';
 import { Row, Col, Form, Button  } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { getTodosAsync } from '../redux/todos-slice';
+import { addTodo } from '../redux/todos-slice';
 
 export default function TodoForm() {
   const [todoItem, setTodoItem] = useState('');
@@ -17,7 +17,7 @@ export default function TodoForm() {
       const todo = await response.json();
       if (todo) {
         // @ts-ignore
-        dispatch(getTodosAsync());
+        dispatch(addTodo(todo));
         setTodoItem('');
       }
     } catch (error) {
