@@ -89,10 +89,31 @@ app.patch('/api/todos', async (req, res) => {
   }
 });
 
-app.use(errorMiddleware);
-
-app.listen(process.env.PORT, () => {
-  process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
+app.delete('/api/todos', async (req, res) => {
+  try {
+    const { todoId } = req.body;
+    const sql = `
+    delete from "todos"
+    where "todoId" = $1
+    returning *`;
+    const params = [todoId];
+    const dbResult = await db.query(sql, params);
+    const [todo] = await dbResult.rows;
+    if (!todo) {
+      res.status(404).json({
+        error: `cannot find todo with todoId ${todoId}`
+      });
+      return;
+    }
+    res.status(200).json(todo);
+  } catch (err) {
+    console.error(err);
+    res.stats(500).json({
+      error: 'an unexpected error occurred'
+    });
+  }
 });
+
+app.use(errorMiddleware);
 
 module.exports = app;
