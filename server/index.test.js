@@ -4,11 +4,10 @@ const app = require('./index');
 
 describe('Test the root path', () => {
 
-  let todoId;
   test('It should respond with the GET method', async () => {
     try {
       const response = await request(app).get('/api/todos');
-      expect(response.statusCode).toBe(200);
+      await expect(response.statusCode).toBe(200);
     } catch (err) {
       console.error(err);
     }

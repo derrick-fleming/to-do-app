@@ -33,7 +33,6 @@ export function TodoItem(props: { todo: { todoId: string, task: string, isComple
         }
       const response = await fetch ('api/todos', body);
       const update = await response.json();
-      console.log({update});
       if (update) {
         // @ts-ignore
         dispatch(toggleComplete(update));

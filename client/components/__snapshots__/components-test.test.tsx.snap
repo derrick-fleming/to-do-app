@@ -45,7 +45,7 @@ exports[`renders TodoItem correctly 1`] = `
 <li>
   <div>
     <div
-      className=" fs-4 py-2 px-2 border-bottom border-2 border-light form-check"
+      className=" width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block form-check"
     >
       <input
         className="form-check-input"
@@ -62,6 +62,14 @@ exports[`renders TodoItem correctly 1`] = `
         Complete work
       </label>
     </div>
+    <button
+      className="d-inline border-0 background-none"
+      onClick={[Function]}
+    >
+      <i
+        className="fa-solid fa-trash"
+      />
+    </button>
   </div>
 </li>
 `;
