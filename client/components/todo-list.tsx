@@ -22,6 +22,11 @@ export function TodoItem(props: { todo: Todos, filter: boolean }) {
     ? ''
     : 'hide-results';
 
+  const checkedForm = isCompleted
+    ? <Form.Check checked type="checkbox" id={idAttr} label={task} className={` width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
+    : <Form.Check type="checkbox" id={idAttr} label={task} className={` width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
+
+
   const handleChange = async (todoId: string) => {
     try {
       const complete = isCompleted ? false : true;
@@ -66,7 +71,7 @@ export function TodoItem(props: { todo: Todos, filter: boolean }) {
     return (
       <li className={`${taskClass}`}>
       <div>
-        <Form.Check type="checkbox" id={idAttr} label={task} className={` width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
+        {checkedForm}
         <button className="d-inline border-0 background-none" onClick={() => handleDelete(todoId)}><i className="fa-solid fa-trash"></i></button>
       </div>
     </li>

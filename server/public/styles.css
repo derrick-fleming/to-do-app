@@ -6,6 +6,7 @@ button {
   background: none;
   color: #6e6e6e;
   transition: color 0.3s ease;
+  border: none;
 }
 
 button:hover {
@@ -24,4 +25,8 @@ button:hover {
 
 .hide-results {
   display: none;
+}
+
+.width-75 {
+  width: 75%;
 }
