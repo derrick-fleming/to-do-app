@@ -6,12 +6,10 @@ export default function FilterTodos (props: { filter: any}) {
   const { filter } = props
   return (
     <Row className="mt-4 mb-2">
-      <Col xs={6}>
-        <h6 className="d-inline-block">
-          Filter Results
-        </h6>
+      <Col xs={4}>
+        <h2>Todos</h2>
       </Col>
-      <Col className="text-end" xs={6}>
+      <Col className="text-end" xs={8}>
         <button className="btn-link" id="complete" onClick={() => filter("complete")}>
           Complete
         </button>
