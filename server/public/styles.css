@@ -2,6 +2,16 @@ ul {
   list-style: none;
 }
 
+button {
+  background: none;
+  color: #6e6e6e;
+  transition: color 0.3s ease;
+}
+
+button:hover {
+  color: #000;
+}
+
 .is-completed > .form-check-label {
   text-decoration: line-through;
   font-style: italic;
@@ -12,12 +22,6 @@ ul {
   width: 90%;
 }
 
-button {
-  background: none;
-  color: #6e6e6e;
-  transition: color 0.3s ease;
-}
-
-button:hover {
-  color: #000;
+.hide-results {
+  display: none;
 }
