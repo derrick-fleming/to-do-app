@@ -22,6 +22,14 @@ export default function FilterTodos (props: { filter: any}) {
     }
   }
 
+  const recentSort = recent === 'recent'
+    ? 'selected'
+    : '';
+
+  const oldestSort = recent === 'oldest'
+    ? 'selected'
+    : '';
+
   return (
     <Row className="mt-4 mb-2">
       <Col xs={4}>
@@ -37,11 +45,11 @@ export default function FilterTodos (props: { filter: any}) {
         </button>
       </Col>
       <Col>
-        <button className="selected" onClick={() => toggleRecent('oldest')}>
+        <button className={oldestSort} onClick={() => toggleRecent('oldest')}>
           Sort by oldest
         </button>
         <p className="d-inline"> | </p>
-        <button className="" onClick={() => toggleRecent('recent')}>
+        <button className={recentSort} onClick={() => toggleRecent('recent')}>
           Sort by most recent
         </button>
       </Col>
