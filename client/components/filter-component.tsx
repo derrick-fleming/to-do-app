@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Row  from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useDispatch } from 'react-redux';
+import { sortTodo } from "../redux/todos-slice";
 
 export default function FilterTodos (props: { filter: any}) {
+  const [ recent, setRecent ] = useState('oldest');
   const { filter } = props
+  const dispatch = useDispatch();
+
+  const toggleRecent = (id: string) => {
+    if (id === 'recent' && recent === 'oldest') {
+      dispatch(sortTodo());
+      setRecent('recent');
+      return;
+    }
+    if (id === 'oldest' && recent === 'recent') {
+      dispatch(sortTodo());
+      setRecent('oldest');
+      return;
+    }
+  }
+
   return (
     <Row className="mt-4 mb-2">
       <Col xs={4}>
@@ -16,6 +34,15 @@ export default function FilterTodos (props: { filter: any}) {
         <p className="d-inline"> | </p>
         <button className="btn-link" id="incomplete" onClick={() => filter("incomplete")}>
           Incomplete
+        </button>
+      </Col>
+      <Col>
+        <button className="selected" onClick={() => toggleRecent('oldest')}>
+          Sort by oldest
+        </button>
+        <p className="d-inline"> | </p>
+        <button className="" onClick={() => toggleRecent('recent')}>
+          Sort by most recent
         </button>
       </Col>
     </Row>

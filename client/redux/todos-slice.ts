@@ -30,6 +30,9 @@ export const todosSlice = createSlice({
     },
     deleteTodo: (state, action: PayloadAction<number>) => {
       return state.filter(todo => todo.todoId !== action.payload);
+    },
+    sortTodo: (state, action: PayloadAction<string>) => {
+      state.reverse();
     }
   },
   extraReducers: (builder) => {
@@ -39,6 +42,6 @@ export const todosSlice = createSlice({
   }
 })
 
-export const { addTodo, toggleComplete, deleteTodo } = todosSlice.actions;
+export const { addTodo, toggleComplete, deleteTodo, sortTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;

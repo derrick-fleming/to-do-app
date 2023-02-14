@@ -30,3 +30,7 @@ button:hover {
 .width-75 {
   width: 75%;
 }
+
+.selected {
+  color: #000;
+}
