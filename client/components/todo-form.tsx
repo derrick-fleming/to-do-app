@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useState } from 'react';
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Row, Col, Form, Button  } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { addTodo } from '../redux/todos-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodoEnd, addTodoStart } from '../redux/todos-slice';
 
 export default function TodoForm() {
   const [todoItem, setTodoItem] = useState('');
+  const sort = useSelector((state: { todosList: { sort: string } }) => state.todosList.sort)
   const dispatch = useDispatch();
 
   const writeItem = (e: ChangeEvent<HTMLInputElement>) => setTodoItem(e.target.value);
@@ -16,8 +17,11 @@ export default function TodoForm() {
       const response = await fetch('/api/todos', body);
       const todo = await response.json();
       if (todo) {
-        // @ts-ignore
-        dispatch(addTodo(todo));
+        if (sort === 'recent') {
+          dispatch(addTodoStart(todo));
+        } else {
+          dispatch(addTodoEnd(todo));
+        }
         setTodoItem('');
       }
     } catch (error) {

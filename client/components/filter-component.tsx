@@ -1,32 +1,15 @@
 import React, { useState } from "react";
 import Row  from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useDispatch } from 'react-redux';
-import { sortTodo } from "../redux/todos-slice";
 
-export default function FilterTodos (props: { filter: any}) {
-  const [ recent, setRecent ] = useState('oldest');
-  const { filter } = props
-  const dispatch = useDispatch();
+export default function FilterTodos (props: { filter: any, sort: string, toggle: any } ) {
+  const { filter, sort, toggle } = props
 
-  const toggleRecent = (id: string) => {
-    if (id === 'recent' && recent === 'oldest') {
-      dispatch(sortTodo());
-      setRecent('recent');
-      return;
-    }
-    if (id === 'oldest' && recent === 'recent') {
-      dispatch(sortTodo());
-      setRecent('oldest');
-      return;
-    }
-  }
-
-  const recentSort = recent === 'recent'
+  const recentSort = sort === 'recent'
     ? 'selected'
     : '';
 
-  const oldestSort = recent === 'oldest'
+  const oldestSort = sort === 'oldest'
     ? 'selected'
     : '';
 
@@ -45,11 +28,11 @@ export default function FilterTodos (props: { filter: any}) {
         </button>
       </Col>
       <Col>
-        <button className={oldestSort} onClick={() => toggleRecent('oldest')}>
+        <button className={oldestSort} onClick={() => toggle('oldest')}>
           Sort by oldest
         </button>
         <p className="d-inline"> | </p>
-        <button className={recentSort} onClick={() => toggleRecent('recent')}>
+        <button className={recentSort} onClick={() => toggle('recent')}>
           Sort by most recent
         </button>
       </Col>
