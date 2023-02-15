@@ -18,27 +18,45 @@ interface Item {
 }
 
 export const todosSlice = createSlice({
-  name: 'todos',
-  initialState: [] as Item[],
+  name: 'todoApp',
+  initialState: {
+    todos: [] as Item[],
+    sort: 'oldest'
+  },
+
   reducers: {
-    addTodo: (state, action: PayloadAction<Item>) => {
-      state.push(action.payload);
+    addTodoStart: (state, action: PayloadAction<Item>) => {
+      state.todos.unshift(action.payload);
+    },
+    addTodoEnd: (state, action: PayloadAction<Item>) => {
+      state.todos.push(action.payload);
     },
     toggleComplete: (state, action: PayloadAction<Item>) => {
-      const index = state.findIndex(todo => todo.todoId === action.payload.todoId)
-      state[index].isCompleted = action.payload.isCompleted;
+      const index = state.todos.findIndex(todo => todo.todoId === action.payload.todoId)
+      state.todos[index].isCompleted = action.payload.isCompleted;
     },
     deleteTodo: (state, action: PayloadAction<number>) => {
-      return state.filter(todo => todo.todoId !== action.payload);
+      state.todos = state.todos.filter(todo => todo.todoId !== action.payload);
+    },
+    sortTodo: (state, action: PayloadAction<string>) => {
+      if (action.payload === 'recent') {
+        state.todos = state.todos.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+      }
+      if (action.payload === 'oldest') {
+        state.todos = state.todos.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt))
+      }
+    },
+    changeSort: (state, action: PayloadAction<string>) => {
+      state.sort = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder.addCase(getTodosAsync.fulfilled, (state, action) => {
-      return action.payload.todos;
+      state.todos = action.payload.todos;
     })
   }
 })
 
-export const { addTodo, toggleComplete, deleteTodo } = todosSlice.actions;
+export const { addTodoEnd, addTodoStart, toggleComplete, deleteTodo, sortTodo, changeSort } = todosSlice.actions;
 
 export default todosSlice.reducer;
