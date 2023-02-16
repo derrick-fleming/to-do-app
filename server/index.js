@@ -2,7 +2,9 @@ require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
+const ClientError = require('./client-error');
 const pg = require('pg');
+const argon2 = require('argon2');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -16,8 +18,26 @@ const app = express();
 app.use(staticMiddleware);
 
 const jsonMiddleWare = express.json();
-
 app.use(jsonMiddleWare);
+
+app.post('/api/auth/sign-up', async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) throw new ClientError(400, 'username and password are required fields');
+    const hashedPassword = await argon2.hash(password);
+    const sql = `
+        insert into "users" ("username", "hashedPassword")
+        values ($1, $2)
+        returning "userId", "username", "createdAt"
+      `;
+    const params = [username, hashedPassword];
+    const result = await db.query(sql, params);
+    const [user] = result.rows;
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
 
 app.get('/api/todos', async (req, res) => {
   try {
