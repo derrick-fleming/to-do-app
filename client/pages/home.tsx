@@ -3,13 +3,10 @@ import TodoForm from '../components/todo-form';
 import Container from 'react-bootstrap/Container';
 import TodoList from '../components/todo-list';
 import LoginPage from './accounts';
-import NavigationBar from '../components/navigation-bar';
-
 
 export default function Home() {
   return (
     <>
-      <NavigationBar />
       <Container>
         <h1 className="text-center my-4">My Todo List</h1>
         <LoginPage />
