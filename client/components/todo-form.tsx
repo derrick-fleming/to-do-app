@@ -48,7 +48,7 @@ export default function TodoForm() {
       <Col md={8} xs={11}>
         <Form onSubmit={handleSubmit}>
           <Form.Label htmlFor="todo" className="fs-4">Write your Task</Form.Label>
-          <Form.Control id="todo" type="text" placeholder="Enter task" className="my-2" value={todoItem} onChange={writeItem}></Form.Control>
+          <Form.Control required id="todo" type="text" placeholder="Enter task" className="my-2" value={todoItem} onChange={writeItem}></Form.Control>
           <div className="text-end">
             <Button type="submit" className="fs-4">Submit</Button>
           </div>
