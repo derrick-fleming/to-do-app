@@ -9,7 +9,6 @@ export default function Home() {
     <>
       <Container>
         <h1 className="text-center my-4">My Todo List</h1>
-        <LoginPage />
         <TodoForm />
         <TodoList />
       </Container>
