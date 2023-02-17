@@ -12,7 +12,7 @@ export default function NavigationBar () {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav>
           <Nav.Link as={Link} to={'/'} >My List</Nav.Link>
-          <Nav.Link as={Link} to={'/accounts'}>Login</Nav.Link>
+          <Nav.Link as={Link} to={'/login'}>Login</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>

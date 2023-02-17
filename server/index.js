@@ -28,10 +28,15 @@ app.post('/api/auth/sign-up', async (req, res, next) => {
     const sql = `
         insert into "users" ("username", "hashedPassword")
         values ($1, $2)
+        on conflict ("username")
+        do nothing
         returning "userId", "username", "createdAt"
       `;
     const params = [username, hashedPassword];
     const result = await db.query(sql, params);
+    if (!result.rows[0]) {
+      throw new ClientError(409, 'username is already in use');
+    }
     const [user] = result.rows;
     res.status(201).json(user);
   } catch (err) {

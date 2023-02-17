@@ -10,7 +10,8 @@ export default function App () {
         <NavigationBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/accounts" element={<LoginPage />} />
+          <Route path="/register" element={<LoginPage page="signup"/>} />
+          <Route path="/login" element={<LoginPage page="login"/>} />
         </Routes>
       </>
     );
