@@ -27,7 +27,8 @@ export default function TodoItem(props: { todo: Todos, filter: boolean, sort: st
       const body = {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('todo-jwt')
         },
         body: JSON.stringify(statusObject)
       }
@@ -46,7 +47,10 @@ export default function TodoItem(props: { todo: Todos, filter: boolean, sort: st
     try {
       const body = {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('todo-jwt')
+        },
         body: JSON.stringify({ todoId })
       };
       const response = await fetch('api/todos', body);

@@ -80,7 +80,7 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
 app.use(authorizationMiddleWare);
 
 app.get('/api/todos', async (req, res) => {
-  const { userId } = req.user.userId;
+  const { userId } = req.user;
   try {
     const sql = `
     select *
@@ -103,7 +103,7 @@ app.get('/api/todos', async (req, res) => {
 app.post('/api/todos', async (req, res) => {
   try {
     const { todoItem, isCompleted = false } = req.body;
-    const { userId } = req.user.userId;
+    const { userId } = req.user;
     if (!todoItem || typeof isCompleted !== 'boolean') {
       res.status(400).json({
         error: 'task (string) and isCompleted (boolean) are required fields'
@@ -111,12 +111,11 @@ app.post('/api/todos', async (req, res) => {
       return;
     }
     const sql = `
-    insert into "todos" ("task", "isCompleted")
-    values ($1, $2)
-    where "userId" = $3
+    insert into "todos" ("userId", "task", "isCompleted")
+    values ($1, $2, $3)
     returning *`;
 
-    const params = [todoItem, isCompleted, userId];
+    const params = [userId, todoItem, isCompleted];
     const dbresult = await db.query(sql, params);
     const [todo] = dbresult.rows;
     res.status(201).json(todo);
@@ -131,7 +130,7 @@ app.post('/api/todos', async (req, res) => {
 app.patch('/api/todos', async (req, res) => {
   try {
     const { isCompleted, todoId } = req.body;
-    const { userId } = req.user.userId;
+    const { userId } = req.user;
 
     const sql = `
       update "todos"
@@ -159,7 +158,7 @@ app.patch('/api/todos', async (req, res) => {
 
 app.delete('/api/todos', async (req, res) => {
   try {
-    const { userId } = req.user.userId;
+    const { userId } = req.user;
     const { todoId } = req.body;
     const sql = `
     delete from "todos"
