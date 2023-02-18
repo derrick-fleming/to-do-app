@@ -6,11 +6,11 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { useNavigate, Link } from "react-router-dom";
 
-export default function LoginPage (props: {page: string}) {
+export default function LoginPage (props: {page: string, signIn:Function}) {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ error, setError ] = useState('');
-  const { page } = props;
+  const { page, signIn } = props;
   const navigate = useNavigate();
 
   function handleChange (e: ChangeEvent<HTMLInputElement>) {
@@ -33,12 +33,10 @@ export default function LoginPage (props: {page: string}) {
     };
 
     const createUser = async (username: string, password: string) => {
-      const route = page === 'login'
-        ? 'sign-in'
-        : 'sign-up';
-
-
       try {
+        const route = page === 'login'
+          ? 'sign-in'
+          : 'sign-up';
         const request = {
           method: 'POST',
           headers: {
@@ -58,6 +56,9 @@ export default function LoginPage (props: {page: string}) {
         setPassword('');
         setUsername('');
         if (page === 'login') {
+          const user = await response.json();
+          console.log('user', user);
+          signIn(user);
           navigate('/')
         } else {
           navigate('/login');
