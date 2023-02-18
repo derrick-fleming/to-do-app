@@ -6,6 +6,7 @@ const ClientError = require('./client-error');
 const pg = require('pg');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const authorizationMiddleWare = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -76,13 +77,19 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
   }
 });
 
+app.use(authorizationMiddleWare);
+
 app.get('/api/todos', async (req, res) => {
+  const { userId } = req.user.userId;
   try {
     const sql = `
     select *
     from "todos"
-    order by "todoId"`;
-    const dbResponse = await db.query(sql);
+    where "userId" = $1
+    order by "todoId"
+    `;
+    const params = [userId];
+    const dbResponse = await db.query(sql, params);
     const todos = dbResponse.rows;
     res.status(200).json(todos);
   } catch (err) {
@@ -96,6 +103,7 @@ app.get('/api/todos', async (req, res) => {
 app.post('/api/todos', async (req, res) => {
   try {
     const { todoItem, isCompleted = false } = req.body;
+    const { userId } = req.user.userId;
     if (!todoItem || typeof isCompleted !== 'boolean') {
       res.status(400).json({
         error: 'task (string) and isCompleted (boolean) are required fields'
@@ -105,9 +113,10 @@ app.post('/api/todos', async (req, res) => {
     const sql = `
     insert into "todos" ("task", "isCompleted")
     values ($1, $2)
+    where "userId" = $3
     returning *`;
 
-    const params = [todoItem, isCompleted];
+    const params = [todoItem, isCompleted, userId];
     const dbresult = await db.query(sql, params);
     const [todo] = dbresult.rows;
     res.status(201).json(todo);
@@ -122,13 +131,15 @@ app.post('/api/todos', async (req, res) => {
 app.patch('/api/todos', async (req, res) => {
   try {
     const { isCompleted, todoId } = req.body;
+    const { userId } = req.user.userId;
+
     const sql = `
       update "todos"
         set "isCompleted" = $2
-      where "todoId" = $1
+      where "todoId" = $1 and "userId" = $3
       returning *
     `;
-    const params = [todoId, isCompleted];
+    const params = [todoId, isCompleted, userId];
     const dbResult = await db.query(sql, params);
     const [todo] = await dbResult.rows;
     if (!todo) {
@@ -148,12 +159,13 @@ app.patch('/api/todos', async (req, res) => {
 
 app.delete('/api/todos', async (req, res) => {
   try {
+    const { userId } = req.user.userId;
     const { todoId } = req.body;
     const sql = `
     delete from "todos"
-    where "todoId" = $1
+    where "todoId" = $1 and "userId" = $2
     returning *`;
-    const params = [todoId];
+    const params = [todoId, userId];
     const dbResult = await db.query(sql, params);
     const [todo] = await dbResult.rows;
     if (!todo) {

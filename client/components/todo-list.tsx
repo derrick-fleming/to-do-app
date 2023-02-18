@@ -17,7 +17,6 @@ export default function TodoList() {
 
   const todos = useSelector((state: { todosList: {todos: Todos[] } } ) => state.todosList.todos);
   const sort = useSelector((state: {todosList: {todos: Todos[], sort: string}}) => state.todosList.sort);
-  console.log('todos value', todos);
   const dispatch = useDispatch();
 
   function handleFilter (id: string) {
@@ -43,7 +42,7 @@ export default function TodoList() {
     dispatch(getTodosAsync());
   }, [dispatch]);
 
-  const list = todos.length === 0 ? 'Loading...' :
+  const list = todos.length === 0 ? 'No results' :
     todos.map(todo => {
       return (
         <TodoItem

@@ -57,7 +57,6 @@ export default function LoginPage (props: {page: string, signIn:Function}) {
         setUsername('');
         if (page === 'login') {
           const user = await response.json();
-          console.log('user', user);
           signIn(user);
           navigate('/')
         } else {
