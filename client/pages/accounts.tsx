@@ -33,6 +33,11 @@ export default function LoginPage (props: {page: string}) {
     };
 
     const createUser = async (username: string, password: string) => {
+      const route = page === 'login'
+        ? 'sign-in'
+        : 'sign-up';
+
+
       try {
         const request = {
           method: 'POST',
@@ -41,14 +46,22 @@ export default function LoginPage (props: {page: string}) {
           },
           body: JSON.stringify({ username, password })
         }
-        const response = await fetch ('/api/auth/sign-up', request);
+        const response = await fetch (`/api/auth/${route}`, request);
         if (response.status === 409) {
           setError('Username has already been taken');
           return;
         }
+        if (response.status === 401) {
+          setError('Invalid login');
+          return;
+        }
         setPassword('');
         setUsername('');
-        navigate('/login');
+        if (page === 'login') {
+          navigate('/')
+        } else {
+          navigate('/login');
+        }
       } catch (err) {
         console.error(err);
       }
