@@ -79,7 +79,7 @@ export default function LoginPage (props: {page: string}) {
           <h1 className="my-4 text-center">{textButton}</h1>
         </Col>
         <Col xs={7}>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} id="loginForm">
             <Form.Label htmlFor="username" className="fs-5" >Username</Form.Label>
             <Form.Control required id="username" type="text" className="" onChange={handleChange} />
             <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
