@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -55,13 +56,9 @@ export default function LoginPage (props: {page: string, signIn:Function}) {
         }
         setPassword('');
         setUsername('');
-        if (page === 'login') {
-          const user = await response.json();
-          signIn(user);
-          navigate('/')
-        } else {
-          navigate('/login');
-        }
+        const user = await response.json();
+        signIn(user);
+        navigate('/')
       } catch (err) {
         console.error(err);
       }
@@ -89,23 +86,30 @@ export default function LoginPage (props: {page: string, signIn:Function}) {
     <Container>
       <Row className="justify-content-center">
         <Col xs={10}>
-          <h1 className="my-4 text-center">{textButton}</h1>
+          <h1 className="text-center my-4">My Todos</h1>
         </Col>
-        <Col xs={7}>
-          <Form onSubmit={handleSubmit} id="loginForm">
-            <Form.Label htmlFor="username" className="fs-5" >Username</Form.Label>
-            <Form.Control required id="username" type="text" className="" onChange={handleChange} />
-            <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
-            <Form.Label htmlFor="password" className="fs-5" >Password</Form.Label>
-            <Form.Control required id="password" type="text" className="" onChange={handleChange}/>
-            <Form.Text>Password must be at least 7 characters and include an uppercase letter and a digit </Form.Text>
-            <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
-            <div className="text-end">
-              <Button type="submit" className="fs-5">{textButton}</Button>
-            </div>
-          </Form>
+        <Col xs={8} md={7} lg={5}>
+          <Card className="shadow-sm">
+            <Card.Title>
+              <h3 className=" mt-2 text-center">{textButton}</h3>
+            </Card.Title>
+            <Card.Body>
+            <Form onSubmit={handleSubmit} id="loginForm">
+              <Form.Label htmlFor="username" className="fs-5" >Username</Form.Label>
+              <Form.Control required id="username" type="text" className="" onChange={handleChange} />
+              <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
+              <Form.Label htmlFor="password" className="fs-5" >Password</Form.Label>
+              <Form.Control required type="password" id="password" className="" onChange={handleChange} />
+              <Form.Text>Password must be at least 7 characters and include an uppercase letter and a digit </Form.Text>
+              <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
+              <div className="text-end">
+                <Button type="submit" className="fs-5">{textButton}</Button>
+              </div>
+            </Form>
+            </Card.Body>
+          </Card>
         </Col>
-        <Col xs={7}>
+        <Col xs={8}>
           <div className="text-center my-4">
             <h5>{textRedirect}</h5>
             <Link className="btn btn-link" to={toLink}>{linkRedirect}</Link>

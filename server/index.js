@@ -26,21 +26,24 @@ app.post('/api/auth/sign-up', async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) throw new ClientError(400, 'username and password are required fields');
-    const hashedPassword = await argon2.hash(password);
+    const updatePassword = await argon2.hash(password);
     const sql = `
         insert into "users" ("username", "hashedPassword")
         values ($1, $2)
         on conflict ("username")
         do nothing
-        returning "userId", "username", "createdAt"
+        returning "userId", "username", "hashedPassword"
       `;
-    const params = [username, hashedPassword];
+    const params = [username, updatePassword];
     const result = await db.query(sql, params);
     if (!result.rows[0]) {
       throw new ClientError(409, 'username is already in use');
     }
     const [user] = result.rows;
-    res.status(201).json(user);
+    const { userId } = user;
+    const payload = { userId, username };
+    const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+    res.json({ token, user: payload });
   } catch (err) {
     next(err);
   }
