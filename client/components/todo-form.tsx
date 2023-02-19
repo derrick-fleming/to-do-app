@@ -36,7 +36,8 @@ export default function TodoForm() {
       const body = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('todo-jwt')
         },
         body: JSON.stringify(newTodo)
       };

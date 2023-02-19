@@ -2,7 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export const getTodosAsync = createAsyncThunk('todos/getTodos', async () => {
-  const response = await fetch('/api/todos');
+  const token = window.localStorage.getItem('todo-jwt')
+  const request = {
+    method: 'GET',
+    headers: {
+      'X-Access-Token': token
+    }
+  }
+  const response = await fetch('/api/todos', request);
   if (response.ok) {
     const todos = await response.json();
     return { todos };
@@ -52,7 +59,9 @@ export const todosSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getTodosAsync.fulfilled, (state, action) => {
-      state.todos = action.payload.todos;
+      if (action.payload.todos) {
+        state.todos = action.payload.todos;
+      }
     })
   }
 })
