@@ -92,7 +92,7 @@ export default function LoginPage (props: {page: string, signIn:Function}) {
         <Col xs={10}>
           <h1 className="text-center my-4">My Todos</h1>
         </Col>
-        <Col xs={5}>
+        <Col xs={8} md={7} lg={5}>
           <Card className="shadow-sm">
             <Card.Title>
               <h3 className=" mt-2 text-center">{textButton}</h3>
