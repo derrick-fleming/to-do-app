@@ -56,13 +56,9 @@ export default function LoginPage (props: {page: string, signIn:Function}) {
         }
         setPassword('');
         setUsername('');
-        if (page === 'login') {
-          const user = await response.json();
-          signIn(user);
-          navigate('/')
-        } else {
-          navigate('/login');
-        }
+        const user = await response.json();
+        signIn(user);
+        navigate('/')
       } catch (err) {
         console.error(err);
       }
@@ -103,7 +99,7 @@ export default function LoginPage (props: {page: string, signIn:Function}) {
               <Form.Control required id="username" type="text" className="" onChange={handleChange} />
               <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
               <Form.Label htmlFor="password" className="fs-5" >Password</Form.Label>
-              <Form.Control required id="password" type="text" className="" onChange={handleChange}/>
+              <Form.Control required type="password" id="password" className="" onChange={handleChange} />
               <Form.Text>Password must be at least 7 characters and include an uppercase letter and a digit </Form.Text>
               <Form.Text className="d-block text-danger mb-4">{error}</Form.Text>
               <div className="text-end">
