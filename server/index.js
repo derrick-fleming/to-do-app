@@ -181,6 +181,9 @@ app.put('/api/todos', async (req, res) => {
     res.status(201).json(todo);
   } catch (err) {
     console.error(err);
+    res.status(500).json({
+      error: 'an unexpected error occurred'
+    });
   }
 });
 
