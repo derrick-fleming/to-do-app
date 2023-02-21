@@ -28,7 +28,8 @@ export const todosSlice = createSlice({
   name: 'todoApp',
   initialState: {
     todos: [] as Item[],
-    sort: 'oldest'
+    sort: 'oldest',
+    editItem: {} as Item
   },
 
   reducers: {
@@ -55,6 +56,9 @@ export const todosSlice = createSlice({
     },
     changeSort: (state, action: PayloadAction<string>) => {
       state.sort = action.payload;
+    },
+    editScreen: (state, action:PayloadAction<Item>) => {
+      state.editItem = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -66,6 +70,6 @@ export const todosSlice = createSlice({
   }
 })
 
-export const { addTodoEnd, addTodoStart, toggleComplete, deleteTodo, sortTodo, changeSort } = todosSlice.actions;
+export const { addTodoEnd, addTodoStart, toggleComplete, deleteTodo, sortTodo, changeSort, editScreen } = todosSlice.actions;
 
 export default todosSlice.reducer;

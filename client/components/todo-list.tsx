@@ -9,7 +9,9 @@ import TodoItem from "./todo-item";
 type Todos = {
   task: string,
   isCompleted: boolean,
-  todoId: string
+  todoId: number,
+  createdAt: string,
+  updatedAt: string
 };
 
 export default function TodoList() {

@@ -21,7 +21,7 @@ it('renders TodoForm correctly', () => {
 });
 
 it('renders TodoItem correctly', () => {
-  const component = renderer.create(<Provider store={store}><TodoItem key='1' todo={{ todoId: '1', task: 'Complete work', isCompleted: false }} filter={false} sort='recent' /></Provider>)
+  const component = renderer.create(<Provider store={store}><TodoItem key='1' todo={{ todoId: 1, task: 'Complete work', isCompleted: false, updatedAt: "2023-02-21T23:36:30.721Z", createdAt: "2023-02 - 21T23: 36: 30.721Z" }} filter={false} sort='recent' /></Provider>)
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 })
