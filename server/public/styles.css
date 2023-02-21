@@ -20,7 +20,7 @@ button:hover {
 }
 
 .width-80 {
-  width: 90%;
+  width: 80%;
 }
 
 .hide-results {
@@ -33,4 +33,16 @@ button:hover {
 
 .selected {
   color: #000;
+}
+
+@media screen and (min-width: 768px) {
+  .width-80 {
+    width: 85%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .width-80 {
+    width: 90%;
+  }
 }
