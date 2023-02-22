@@ -91,8 +91,13 @@ export default function TodoForm() {
       putTodo(body, upTodo);
     }
 
+    const handleCancel = () => {
+      dispatch(removeEditScreen());
+      setTodoItem('');
+    };
+
   const cancelButton = keys.length > 0
-    ? <Button className="fs-6 me-4 btn-secondary">Cancel</Button>
+    ? <Button className="fs-6 me-4 btn-secondary" onClick={handleCancel}>Cancel</Button>
     : '';
 
   return (
