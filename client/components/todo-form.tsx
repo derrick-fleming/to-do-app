@@ -91,6 +91,10 @@ export default function TodoForm() {
       putTodo(body, upTodo);
     }
 
+  const cancelButton = keys.length > 0
+    ? <Button className="fs-6 me-4 btn-secondary">Cancel</Button>
+    : '';
+
   return (
     <Row className="justify-content-center">
       <Col md={8} xs={11}>
@@ -98,7 +102,8 @@ export default function TodoForm() {
           <Form.Label htmlFor="todo" className="fs-4">Write your Task</Form.Label>
           <Form.Control required id="todo" type="text" placeholder="Enter task" className="my-2" value={todoItem} onChange={writeItem}></Form.Control>
           <div className="text-end">
-            <Button type="submit" className="fs-4">Submit</Button>
+            {cancelButton}
+            <Button type="submit" className="fs-6">Submit</Button>
           </div>
         </Form>
       </Col>
