@@ -1,7 +1,7 @@
 import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { Row, Col, Form, Button  } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodoEnd, addTodoStart } from '../redux/todos-slice';
+import { addTodoEnd, addTodoStart, updateTodo, removeEditScreen } from '../redux/todos-slice';
 
 type Todo = {
   task: string,
@@ -16,9 +16,6 @@ export default function TodoForm() {
   const sort = useSelector((state: { todosList: { sort: string } }) => state.todosList.sort)
   const editTodo = useSelector((state: { todosList: {editItem: Todo}}) => state.todosList.editItem);
   const dispatch = useDispatch();
-
-  console.log('editTodo', editTodo);
-  console.log('todoItem', todoItem);
 
   const keys = Object.keys(editTodo);
 
@@ -50,11 +47,26 @@ export default function TodoForm() {
     }
     }
 
+    const putTodo = async (body: {}, item: Todo) => {
+      try {
+        const response = await fetch('/api/todos', body);
+        const todo = await response.json();
+        if (todo) {
+          dispatch(updateTodo(item));
+          dispatch(removeEditScreen());
+        }
+        setTodoItem('');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
       if (todoItem.length === 0) {
         return;
       }
       const newTodo = { todoItem, isComplete: false };
-      const body = {
+
+      let body = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,8 +74,22 @@ export default function TodoForm() {
         },
         body: JSON.stringify(newTodo)
       };
-      patchTodo(body);
-}
+      if (keys.length === 0 ) {
+        patchTodo(body);
+        return;
+      }
+      const upTodo = { ...editTodo }
+      upTodo.task = todoItem;
+      body = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('todo-jwt')
+        },
+        body: JSON.stringify(upTodo)
+      };
+      putTodo(body, upTodo);
+    }
 
   return (
     <Row className="justify-content-center">

@@ -161,9 +161,9 @@ app.patch('/api/todos', async (req, res) => {
 
 app.put('/api/todos', async (req, res) => {
   try {
-    const { todoItem, todoId } = req.body;
+    const { task, todoId } = req.body;
     const { userId } = req.user;
-    if (!todoItem || !todoId) {
+    if (!task || !todoId) {
       res.status(400).json({
         error: 'task (string) and todoId are required'
       });
@@ -172,10 +172,10 @@ app.put('/api/todos', async (req, res) => {
     const sql = `
     update "todos"
     set "task" = $1
-    where todoId = $2 and userId = $3
+    where "todoId" = $2 and "userId" = $3
     returning *
     `;
-    const params = [todoItem, todoId, userId];
+    const params = [task, todoId, userId];
     const dbresult = await db.query(sql, params);
     const [todo] = dbresult.rows;
     res.status(201).json(todo);
