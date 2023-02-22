@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { toggleComplete, deleteTodo } from '../redux/todos-slice';
+import { toggleComplete, deleteTodo, editScreen } from '../redux/todos-slice';
 import Form from 'react-bootstrap/Form';
 
 type Todos = {
   task: string,
   isCompleted: boolean,
-  todoId: string
+  todoId: number,
+  createdAt: string,
+  updatedAt: string
 };
 
 export default function TodoItem(props: { todo: Todos, filter: boolean, sort: string }) {
@@ -20,7 +22,7 @@ export default function TodoItem(props: { todo: Todos, filter: boolean, sort: st
     : 'hide-results';
 
 
-  const handleChange = async (todoId: string) => {
+  const handleChange = async (todoId: number) => {
     try {
       const complete = isCompleted ? false : true;
       const statusObject = { todoId, isCompleted: complete }
@@ -43,7 +45,15 @@ export default function TodoItem(props: { todo: Todos, filter: boolean, sort: st
     }
   }
 
-  const handleDelete = async (todoId: string) => {
+  const handleEdit = async () => {
+    try {
+      dispatch(editScreen(props.todo))
+    } catch(err) {
+      console.error('There was an error', err);
+    }
+  }
+
+  const handleDelete = async (todoId: number) => {
     try {
       const body = {
         method: 'DELETE',
@@ -69,6 +79,7 @@ export default function TodoItem(props: { todo: Todos, filter: boolean, sort: st
     <li className={`${taskClass}`}>
       <div>
         <Form.Check type="checkbox" id={idAttr} label={task} className={` width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
+        <button className="d-inline border-0 background-none" onClick={() => handleEdit()}><i className="fa-solid fa-pencil"></i></button>
         <button className="d-inline border-0 background-none" onClick={() => handleDelete(todoId)}><i className="fa-solid fa-trash"></i></button>
       </div>
     </li>

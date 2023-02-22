@@ -159,6 +159,34 @@ app.patch('/api/todos', async (req, res) => {
   }
 });
 
+app.put('/api/todos', async (req, res) => {
+  try {
+    const { task, todoId } = req.body;
+    const { userId } = req.user;
+    if (!task || !todoId) {
+      res.status(400).json({
+        error: 'task (string) and todoId are required'
+      });
+      return;
+    }
+    const sql = `
+    update "todos"
+    set "task" = $1
+    where "todoId" = $2 and "userId" = $3
+    returning *
+    `;
+    const params = [task, todoId, userId];
+    const dbresult = await db.query(sql, params);
+    const [todo] = dbresult.rows;
+    res.status(201).json(todo);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: 'an unexpected error occurred'
+    });
+  }
+});
+
 app.delete('/api/todos', async (req, res) => {
   try {
     const { userId } = req.user;
