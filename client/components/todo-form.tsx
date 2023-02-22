@@ -1,12 +1,33 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { Row, Col, Form, Button  } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodoEnd, addTodoStart } from '../redux/todos-slice';
 
+type Todo = {
+  task: string,
+  isCompleted: boolean,
+  todoId: number,
+  createdAt: string,
+  updatedAt: string
+};
+
 export default function TodoForm() {
   const [todoItem, setTodoItem] = useState('');
   const sort = useSelector((state: { todosList: { sort: string } }) => state.todosList.sort)
+  const editTodo = useSelector((state: { todosList: {editItem: Todo}}) => state.todosList.editItem);
   const dispatch = useDispatch();
+
+  console.log('editTodo', editTodo);
+  console.log('todoItem', todoItem);
+
+  const keys = Object.keys(editTodo);
+
+  useEffect(() => {
+    if (keys.length > 0) {
+      setTodoItem(editTodo.task);
+    }
+  }, [editTodo]);
+
 
   const writeItem = (e: ChangeEvent<HTMLInputElement>) => setTodoItem(e.target.value);
 
