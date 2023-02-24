@@ -32,8 +32,8 @@ button:hover {
 .clip {
   display: inline-block;
   position: relative;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   background: #e30b0b;
   border-radius: 50%;
   box-shadow: 2px 2px 4px #000;
@@ -42,16 +42,16 @@ button:hover {
 .clip-top {
   display: inline-block;
   position: absolute;
-  transform: translate(-125%, 10%);
-  width: 3rem;
-  height: 3rem;
+  transform: translate(-140%, 25%);
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   background: radial-gradient(#ed2828, #f01717);
   box-shadow: 2px 2px 15px #000;
 }
 
 .text-end > .clip-top {
-  transform: translate(-110%, 10%);
+  transform: translate(-120%, 25%);
   box-shadow: 2px 2px 15px #000;
 }
 
@@ -86,7 +86,7 @@ button:hover {
 
 @media screen and (min-width: 768px) {
   .width-80 {
-    width: 85%;
+    width: 80%;
   }
 }
 

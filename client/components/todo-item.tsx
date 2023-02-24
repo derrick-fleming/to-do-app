@@ -78,7 +78,7 @@ export default function TodoItem(props: { todo: Todos, filter: boolean, sort: st
   return (
     <li className={`${taskClass}`}>
       <div>
-        <Form.Check type="checkbox" id={idAttr} label={task} className={` width-80 fs-4 py-2 px-2 border-bottom border-2 border-light d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
+        <Form.Check type="checkbox" id={idAttr} label={task} className={` width-80 fs-4 py-2 px-2 border-bottom border-1 border-danger d-inline-block`} onChange={() => handleChange(todoId)}></Form.Check>
         <button className="d-inline border-0 background-none" onClick={() => handleEdit()}><i className="fa-solid fa-pencil"></i></button>
         <button className="d-inline border-0 background-none" onClick={() => handleDelete(todoId)}><i className="fa-solid fa-trash"></i></button>
       </div>
