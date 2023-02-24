@@ -1,3 +1,12 @@
+html {
+  background: url("https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/px1141010-image-kwyr0s06.jpg?w=1200&h=1200&dpr=1&fit=clip&crop=default&fm=jpg&q=75&vib=3&con=3&usm=15&cs=srgb&bg=F4F4F3&ixlib=js-2.2.1&s=6002a973534bc0f3676645d39245fbd8");
+}
+
+body {
+  background: none;
+  margin: 0 auto;
+}
+
 ul {
   list-style: none;
 }
@@ -11,6 +20,39 @@ button {
 
 button:hover {
   color: #000;
+}
+
+.clipboard {
+  background: url("https://media.istockphoto.com/id/1199971584/vector/paper-texture-background.jpg?s=170667a&w=0&k=20&c=qlztxRTxC28kV7O0nshr9Ej0xNiGvTTDgjAgEjE5jLY=");
+  background-size: cover;
+  min-height: 80vh;
+  border-radius: 1rem;
+}
+
+.clip {
+  display: inline-block;
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  background: #e30b0b;
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px #000;
+}
+
+.clip-top {
+  display: inline-block;
+  position: absolute;
+  transform: translate(-125%, 10%);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: radial-gradient(#ed2828, #f01717);
+  box-shadow: 2px 2px 15px #000;
+}
+
+.text-end > .clip-top {
+  transform: translate(-110%, 10%);
+  box-shadow: 2px 2px 15px #000;
 }
 
 .is-completed > .form-check-label {
@@ -33,6 +75,13 @@ button:hover {
 
 .selected {
   color: #000;
+}
+
+@media screen and (max-width: 768px) {
+  .text-end > .clip-top,
+  .text-end > .clip {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 768px) {

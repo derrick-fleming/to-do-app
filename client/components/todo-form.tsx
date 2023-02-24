@@ -2,6 +2,7 @@ import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { Row, Col, Form, Button  } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodoEnd, addTodoStart, updateTodo, removeEditScreen } from '../redux/todos-slice';
+import Card from 'react-bootstrap/Card';
 
 type Todo = {
   task: string,
@@ -103,14 +104,18 @@ export default function TodoForm() {
   return (
     <Row className="justify-content-center">
       <Col md={8} xs={11}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Label htmlFor="todo" className="fs-4">Write your Task</Form.Label>
-          <Form.Control required id="todo" type="text" placeholder="Enter task" className="my-2" value={todoItem} onChange={writeItem}></Form.Control>
-          <div className="text-end">
-            {cancelButton}
-            <Button type="submit" className="fs-6">Submit</Button>
-          </div>
-        </Form>
+        <Card className="shadow-sm">
+          <Card.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Label htmlFor="todo" className="fs-4">Write your Task</Form.Label>
+              <Form.Control required id="todo" type="text" placeholder="Enter task" className="my-2" value={todoItem} onChange={writeItem}></Form.Control>
+              <div className="text-end">
+                {cancelButton}
+                <Button type="submit" className="fs-6">Submit</Button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
       </Col>
     </Row>
   );
