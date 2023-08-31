@@ -106,6 +106,10 @@ button:hover {
   font-weight: bold;
 }
 
+.react-calendar__tile--active {
+  background-color: #f99e9e;
+}
+
 @media screen and (max-width: 768px) {
   .text-end > .clip-top,
   .text-end > .clip {
