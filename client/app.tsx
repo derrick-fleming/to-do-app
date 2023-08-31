@@ -9,6 +9,7 @@ import jwtDecode from 'jwt-decode';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Calendar from './pages/calendar';
 
 type User = {
   userId: number,
@@ -54,7 +55,9 @@ export default function App () {
               </Row>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/mylist" element={<Home />} />
                 <Route path="/register" element={<LoginPage page="signup" signIn={handleSignIn}/>} />
+                <Route path='/calendar' element={<Calendar />} />
               <Route path="/login" element={<LoginPage page="login" signIn={handleSignIn}/>} />
               </Routes>
             </Col>
