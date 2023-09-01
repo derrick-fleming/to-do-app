@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 html {
   background: url("https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/px1141010-image-kwyr0s06.jpg?w=1200&h=1200&dpr=1&fit=clip&crop=default&fm=jpg&q=75&vib=3&con=3&usm=15&cs=srgb&bg=F4F4F3&ixlib=js-2.2.1&s=6002a973534bc0f3676645d39245fbd8");
 }
@@ -75,6 +76,38 @@ button:hover {
 
 .selected {
   color: #000;
+}
+
+.calendar-styles {
+  background-color: #fefefe;
+  box-shadow: #6e6e6e 2px 2px 8px;
+  border-radius: 4px;
+  color: #000;
+  text-align: center;
+}
+
+.react-calendar__month-view__days__day {
+  color: #000;
+  padding: 0.5em 0;
+  transition: all 0.2s ease-out;
+}
+
+.react-calendar__month-view__days__day:hover {
+  background-color: #f99e9e;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #969696;
+}
+
+.react-calendar__navigation__label {
+  padding-bottom: 1em;
+  color: #000;
+  font-weight: bold;
+}
+
+.react-calendar__tile--active {
+  background-color: #f99e9e;
 }
 
 @media screen and (max-width: 768px) {
