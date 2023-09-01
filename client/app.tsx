@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from './pages/home';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import NavigationBar from './components/navigation-bar';
@@ -19,6 +19,7 @@ type User = {
 export default function App () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isAuthorizing, setIsAuthorizing] = useState(true);
 
   const handleSignIn = (result: { user:{ userId: number, username: string}, token:string }) => {
     const { user, token } = result;
@@ -27,15 +28,20 @@ export default function App () {
   }
 
   useEffect(() => {
-    const token = window.localStorage.getItem('todo-jwt');
-    const user: User = token ? jwtDecode(token) : null;
-    if (user === null) {
-      navigate('/login')
-    } else {
+    if (isAuthorizing) {
+      const token = window.localStorage.getItem('todo-jwt');
+      const user: User = token ? jwtDecode(token) : null;
+      if (!user) {
+        navigate('/login')
+      } else {
       dispatch(addUser(user));
-      navigate('/')
+
+      };
+      setIsAuthorizing(false);
     }
-  }, []);
+  }, [isAuthorizing]);
+
+  if (isAuthorizing) return null;
 
   return (
       <>
